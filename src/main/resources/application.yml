@@ -1,0 +1,10 @@
+spring:
+  datasource:
+  driver-class-name: org.hsqldb.jdbc.JDBCDriver
+  url: jdbc:hsqldb:mem:db
+  username: sa
+  password: sa
+
+springdoc:
+  api-docs:
+    path: /api-docs
