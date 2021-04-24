@@ -4,6 +4,8 @@ spring:
   url: jdbc:hsqldb:mem:db
   username: sa
   password: sa
+  jpa:
+    open-in-view: false
 
 springdoc:
   api-docs:
