@@ -2,6 +2,7 @@ package com.drinkio.drinkio.controller;
 
 import com.drinkio.drinkio.dto.DrinkDTO;
 import com.drinkio.drinkio.helper.DrinkHelper;
+import com.drinkio.drinkio.service.DrinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,17 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class DrinkController {
 
     @Autowired
-    DrinkHelper drinkHelper;
+    DrinkService drinkService;
 
 
     @GetMapping("/{id}")
     public DrinkDTO getById(@PathVariable("id") Long id) {
-        return null;
+        return drinkService.getById(id);
     }
 
-    @PostMapping("/createDrink")
+    @PostMapping("/create")
     public DrinkDTO createDrink(@RequestBody DrinkDTO drinkDTO) {
-        return drinkHelper.creatDrink(drinkDTO);
+        return drinkService.createDrink(drinkDTO);
     }
 
 }

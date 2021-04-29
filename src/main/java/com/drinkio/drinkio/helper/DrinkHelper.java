@@ -22,11 +22,11 @@ public class DrinkHelper {
     @Autowired
     RecipeHelper recipeHelper;
 
-    public DrinkDTO creatDrink(DrinkDTO drinkDTO) {
-        return DrinkDTO.of(creatDrink(drinkDTO.name, drinkDTO.alcoholic, drinkDTO.categoryDTO, drinkDTO.recipeDTO));
+    public DrinkDTO createDrink(DrinkDTO drinkDTO) {
+        return DrinkDTO.of(createDrink(drinkDTO.name, drinkDTO.alcoholic, drinkDTO.categoryDTO, drinkDTO.recipeDTO));
     }
 
-    public Drink creatDrink(String name, Boolean alcoholic, CategoryDTO categoryDTO, RecipeDTO recipeDTO) {
+    public Drink createDrink(String name, Boolean alcoholic, CategoryDTO categoryDTO, RecipeDTO recipeDTO) {
         Drink drink = new Drink();
         drink.setName(name);
         drink.setAlcoholic(alcoholic);
@@ -48,4 +48,12 @@ public class DrinkHelper {
     }
 
 
+    public DrinkDTO getById(Long id) {
+        return DrinkDTO.of(findDrinkById(id));
+    }
+
+
+    public Drink findDrinkById(Long drinkId) {
+        return drinkRepository.findById(drinkId).orElseThrow(() -> new RuntimeException("Drink not found"));
+    }
 }
