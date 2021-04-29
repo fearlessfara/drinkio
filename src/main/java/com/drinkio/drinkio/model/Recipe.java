@@ -1,12 +1,21 @@
 package com.drinkio.drinkio.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Recipe {
@@ -17,14 +26,15 @@ public class Recipe {
     @OneToOne
     private Drink drink;
 
-    @ManyToMany
-    private List<Ingredient> ingredients;
-
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Step> steps;
 
-    public Recipe(){
-        //hibernate
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.DETACH, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<IngredientRecipe> ingredients = new HashSet<>();
+
+    public Recipe() {
+        //hibernatec
     }
 
 
@@ -44,14 +54,6 @@ public class Recipe {
         this.drink = drink;
     }
 
-    public List<Ingredient> getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
-    }
-
     public List<Step> getSteps() {
         return steps;
     }
@@ -60,5 +62,37 @@ public class Recipe {
         this.steps = steps;
     }
 
+    public Set<IngredientRecipe> getIngredients() {
+        return ingredients;
+    }
 
+    public void setIngredients(Set<IngredientRecipe> ingredientRecipes) {
+        this.ingredients = ingredientRecipes;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Recipe recipe = (Recipe) o;
+
+        return new EqualsBuilder().append(drink, recipe.drink).append(steps, recipe.steps).append(ingredients, recipe.ingredients).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(drink).append(steps).append(ingredients).toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("drink", drink)
+                .append("steps", steps)
+                .append("ingredientRecipes", ingredients)
+                .toString();
+    }
 }

@@ -1,11 +1,16 @@
 spring:
-  datasource:
-  driver-class-name: org.hsqldb.jdbc.JDBCDriver
-  url: jdbc:hsqldb:mem:db
-  username: sa
-  password: sa
   jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
     open-in-view: false
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3310/drinkio
+    username: drinkio
+    password: drinkio
 
 springdoc:
   api-docs:

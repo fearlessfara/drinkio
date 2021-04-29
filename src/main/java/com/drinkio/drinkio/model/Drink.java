@@ -2,6 +2,7 @@ package com.drinkio.drinkio.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -17,16 +18,16 @@ public class Drink {
     @Column
     private String name;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     private Recipe recipe;
 
     @Column
     private Boolean alcoholic;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
 
-    public Drink(){
+    public Drink() {
         //hibernate
     }
 

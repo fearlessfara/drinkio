@@ -2,11 +2,15 @@ package com.drinkio.drinkio.helper;
 
 import com.drinkio.drinkio.dto.SearchDTO;
 import com.drinkio.drinkio.dto.SearchResultsDTO;
+import com.drinkio.drinkio.model.Drink;
+import com.drinkio.drinkio.model.Recipe;
 import com.drinkio.drinkio.repository.DrinkRepository;
 import com.drinkio.drinkio.repository.IngredientRepository;
+import com.drinkio.drinkio.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -18,13 +22,18 @@ public class SearchHelper {
     @Autowired
     IngredientRepository ingredientRepository;
 
+    @Autowired
+    RecipeRepository recipeRepository;
+
     public SearchResultsDTO searchDrinkByName(SearchDTO searchDTO) {
         var searchTerm = "%" + searchDTO.name + "%";
         return SearchResultsDTO.ofDrinks(drinkRepository.findDrinksByNameLike(searchTerm));
     }
 
     public SearchResultsDTO searchDrinkByIngredients(SearchDTO searchDTO) {
-        return SearchResultsDTO.ofDrinks(drinkRepository.findDrinksByRecipe_IngredientsIn(searchDTO.ingredients));
+        List<Recipe> recipes = recipeRepository.findRecipeByIngredientsIn(searchDTO.ingredients);
+        List<Drink> drinks = drinkRepository.findDrinksByRecipeIn(recipes);
+        return SearchResultsDTO.ofDrinks(drinks);
     }
 
     public SearchResultsDTO searchIngredients(SearchDTO searchDTO) {

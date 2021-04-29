@@ -1,0 +1,14 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  drinkio-db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: drinkio
+      MYSQL_USER: drinkio
+      MYSQL_PASSWORD: drinkio
+      MYSQL_DATABASE: drinkio
+    ports:
+      - 3310:3306

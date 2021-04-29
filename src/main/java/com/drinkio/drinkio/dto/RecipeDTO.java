@@ -18,7 +18,7 @@ public class RecipeDTO {
     public static RecipeDTO of(Recipe recipe) {
         RecipeDTO recipeDTO = new RecipeDTO();
         recipeDTO.id = recipe.getId();
-        recipeDTO.ingredients = recipe.getIngredients();
+        recipeDTO.ingredients = null;
         recipeDTO.steps = recipe.getSteps();
         return recipeDTO;
     }

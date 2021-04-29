@@ -12,5 +12,8 @@ public class Step {
     private Long id;
 
     @Column
+    private Long number;
+
+    @Column
     private String description;
 }
