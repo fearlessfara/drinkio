@@ -2,6 +2,16 @@
 version: '3.1'
 
 services:
+  drinkio-app:
+    build: .
+    container_name: drink.io
+    ports:
+    - 8081:8080
+    depends_on:
+      - drinkio-db
+    links:
+      - drinkio-db
+
   drinkio-db:
     image: mariadb
     restart: always

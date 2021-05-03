@@ -8,7 +8,7 @@ spring:
     open-in-view: false
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3310/drinkio
+    url: jdbc:mariadb://drinkio-db:3306/drinkio
     username: drinkio
     password: drinkio
 
